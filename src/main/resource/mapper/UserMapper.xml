@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--映射实体dao层-->
+<mapper namespace="com.zhongruan.dao.IUserInfoDao">
+    <select id="findAll" resultType="com.zhongruan.bean.UserInfo">
+        select * from userinfo
+    </select>
+
+    <select id="login"
+            resultType="com.zhongruan.bean.UserInfo">
+        select * from userinfo where username = #{username} and password
+        = #{password}
+    </select>
+
+    <insert id="addUserInfo"
+            parameterType="com.zhongruan.bean.UserInfo">
+        insert into userinfo (username ,password)
+        values(#{username},#{password})
+    </insert>
+
+    <select id="selectById" parameterType="int"
+            resultType="com.zhongruan.bean.UserInfo">
+        select  * from userinfo where id = #{id}
+    </select>
+
+    <update id="updateUserinfo"
+            parameterType="com.zhongruan.bean.UserInfo">
+        update userinfo set username = #{username} ,password =#{password}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserInfo" parameterType="int">
+        delete  from userinfo where id = #{id}
+    </delete>
+
+    <select id="findByUserName" parameterType="java.lang.String" resultType="com.zhongruan.bean.UserInfo">
+        select  *  from userinfo where username = #{username}
+    </select>
+
+    <!--传过来的为数组-->
+    <delete id="deleteAll" parameterType="list">
+        delete from userinfo where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+
+    </delete>
+
+</mapper>
